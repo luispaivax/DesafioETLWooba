@@ -1,11 +1,12 @@
 ﻿using DesafioETLWooba.Models;
+using DesafioETLWooba.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DesafioETLWooba.Services
 {
-    public class CsvReaderService
+    public class CsvReaderService : IReader
     {
         public List<Cliente> Read(string caminhoCsv)
         {
