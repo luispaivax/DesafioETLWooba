@@ -28,6 +28,10 @@ try
     banco.InserirVarios(registrosTratados);
     Console.WriteLine("Gravação concluída");
 
+    // 4. Menu
+    var menu = new MenuService(banco);
+    menu.Executar();
+
 }
 catch (Exception ex)
 {
@@ -39,5 +43,4 @@ finally
         descartavel.Dispose();
 }
 
-Console.WriteLine("\nPressione qualquer tecla para sair");
-Console.ReadKey();
+Console.WriteLine("\nEncerrando...");
