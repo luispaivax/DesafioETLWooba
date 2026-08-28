@@ -1,6 +1,7 @@
 ﻿using DesafioETLWooba.Models;
 using DesafioETLWooba.Services;
 using DesafioETLWooba.Interfaces;
+using DesafioETLWooba.Data;
 
 Console.WriteLine("+=+= ETL =+=+\n");
 
@@ -8,6 +9,7 @@ string caminhoCsv = "clientes_lote_a.csv";
 
 IReader reader = new CsvReaderService();
 ITransform transform = new CsvTransformService();
+ILoad banco = new LoadSQL();
 
 try
 {
@@ -21,10 +23,20 @@ try
     List<Cliente> registrosTratados = transform.Transform(registros);
     Console.WriteLine($"\n{registrosTratados.Count} registros válidos após tratamento");
 
+    // 3. Gravação
+    Console.WriteLine("Gravando os dados no banco em memória...");
+    banco.InserirVarios(registrosTratados);
+    Console.WriteLine("Gravação concluída");
+
 }
 catch (Exception ex)
 {
     Console.WriteLine($"Erro: {ex.Message}");
+}
+finally
+{
+    if (banco is IDisposable descartavel)
+        descartavel.Dispose();
 }
 
 Console.WriteLine("\nPressione qualquer tecla para sair");
